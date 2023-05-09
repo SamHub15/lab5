@@ -15,11 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, re_path
+from django.contrib import admin
 from articles import views
 
 urlpatterns = [
-    re_path(r'^article/(?P<article_id>\d+)$', views.get_article, name='get_article'),
+    path('admin/', admin.site.urls),
     path('', views.archive, name='archive'),
+    re_path(r'^article/(?P<article_id>\d+)$', views.get_article, name='get_article'),
+    path('article/new/', views.create_post, name='create_post'),
+
 ]
 
 
