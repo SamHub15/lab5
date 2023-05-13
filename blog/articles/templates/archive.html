@@ -7,22 +7,34 @@
 
 <body class="archive">
 <div class="header">
+    {% if request.user.is_authenticated %}
+    <div style="text-align: right;">
+        <a href="http://127.0.0.1:8000/create_post" style="color: white; display: block;">Создать статью</a>
+        <a href="http://127.0.0.1:8000/logout" style="color: white; display: block;">Выход из аккаунта</a>
+        <span style="float: right; color: white; order:3;">Привет, {{ request.user.username }}!</span>
+    </div>
+    {% else %}
+    <div style="text-align: right;">
+        <a href="http://127.0.0.1:8000/auth" style="color: white; display: block;">Авторизация</a>
+        <a href="http://127.0.0.1:8000/registration" style="color: white; display: block;">Регистрация</a>
+        </div>
+    {% endif %}
     {% load static %}
     <img src="{% static 'img/logo.png' %}" alt="Картинка" />
 </div>
 <div class="archive">
     {% for post in posts %}
-    <div class="one-post">
-        <h2 class="post-title">
-            <a href="http://127.0.0.1:8000/article/{{post.id}}">{{post.title}}</a>
-        </h2>
-        <div class="article-info">
-            <div class="article-author">{{post.author.username}}</div>
-            <div class="article-created-date">{{post.created_date}}</div>
+        <div class="one-post">
+            <h2 class="post-title">
+                <a href="http://127.0.0.1:8000/article/{{post.id}}">{{post.title}}</a>
+            </h2>
+            <div class="article-info">
+                <div class="article-author">{{post.author.username}}</div>
+                <div class="article-created-date">{{post.created_date}}</div>
+            </div>
+            <p class="article-text">{{post.get_excerpt}}</p>
         </div>
-        <p class="article-text">{{post.get_excerpt}}</p>
-</div>
-{% endfor %}
+    {% endfor %}
 </div>
 </body>
 </html>
